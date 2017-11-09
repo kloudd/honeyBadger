@@ -1,0 +1,119 @@
+{% load static %}
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="{% static "bootstrap/css/bootstrap.min.css" %}">
+	
+	
+	
+
+    
+    <script type="text/javascript" src="{% static "bootstrap/js/jquery-3.2.1.min.js"%}"></script>
+    
+    <script type="text/javascript" src="{% static "bootstrap/js/bootstrap.js" %}"></script>
+    <script type="text/javascript" src="{% static "bootstrap/js/popper.min.js"%}"></script>
+    <script type="text/javascript" src="{% static "/bootstrap/js/Chart.js"%}"></script>
+    
+</head>
+<body>
+	<div class="container">
+	<br>
+		<div class="alert alert-danger">
+			Question: How many orders did the site recieve ? 
+		</div>
+		<div class="alert alert-primary">
+			Answer: {{totalCount}}
+		</div>
+		
+		<div class="alert alert-danger">
+			Question: How many total amount did the site recieve ? 
+		</div>
+		<div class="alert alert-primary">	
+			Answer: {{totalAmount}}
+		</div>
+		
+		<div class="alert alert-danger">
+		Question: 3. List the names of the customers who ordered once and did not order again.
+		</div>
+		<div class="alert alert-primary"> 
+		Answer: 
+		{% for name in totalName %}
+		       {{ name.name }}
+		{% endfor %}
+		</div>
+		
+		<div class="alert alert-danger">
+		Question 4:Get a distribution of customers who ordered exactly once, exactly twice and so on up to 4 orders and group the rest as 5 orders and above.
+		</div>
+		<br>
+		<div class="alert alert-primary"> 
+		Answer: 
+		4->1: {{totalOnceCount}}<br>
+		4->2: {{totalTwiceCount}}<br>
+		4->3: {{totalThriceCount}}<br>
+		4->4: {{totalFourCount}}<br>
+		4->5: {{totalFiveCount}}<br>
+		</div>
+		<table class="table">
+			<thead class="thead-dark">
+			<tr>
+				<td scope="col">ONE</td>
+				<td scope="col">TWO</td>
+				<td scope="col">THREE</td>
+				<td scope="col">FOUR</td>
+				<td scope="col">FIVE</td>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+		       <td>{{totalOnceCount }}</td>
+		       <td>{{totalTwiceCount}}</td>
+		       <td>{{totalThriceCount}}</td>
+		       <td>{{totalFourCount}}</td>
+		       <td>{{totalFiveCount}}</td>
+			</tr>
+			</tbody>
+		</table>
+
+		<canvas id="barChart"></canvas>
+		<script type="text/javascript">
+
+			var ctxB = document.getElementById("barChart").getContext('2d');
+			var myBarChart = new Chart(ctxB, {
+			    type: 'bar',
+			    data: {
+			        labels: ["ONE", "TWO", "THREE", "FOUR", "FIVE"],
+			        datasets: [{
+			            label: '# of Votes',
+			            data: [11, 9, 10, 8, 8, 0],
+			            backgroundColor: [
+			                'rgba(255, 99, 132, 0.2)',
+			                'rgba(54, 162, 235, 0.2)',
+			                'rgba(255, 206, 86, 0.2)',
+			                'rgba(75, 192, 192, 0.2)',
+			                'rgba(153, 102, 255, 0.2)'
+			                
+			            ],
+			            borderColor: [
+			                'rgba(255,99,132,1)',
+			                'rgba(54, 162, 235, 1)',
+			                'rgba(255, 206, 86, 1)',
+			                'rgba(75, 192, 192, 1)',
+			                'rgba(153, 102, 255, 1)'
+			                
+			            ],
+			            borderWidth: 1
+			        }]
+			    },
+			    optionss: {
+			        scales: {
+			            yAxes: [{
+			                ticks: {
+			                    beginAtZero:true
+			                }
+			            }]
+			        }
+			    }
+			});
+		</script>
+	</div>
+</body>
